@@ -591,6 +591,7 @@ export default class Farm extends ModuleBase {
       });
       const ledgerData = await this.scope.connection.getAccountInfo(ledger);
       if (!ledgerData) {
+        // user has old not ata farm vault and don't have ata vault
         if (version !== 6 && (userAuxiliaryLedgers || []).length > 0) {
           const { instruction, instructionType } = createAssociatedLedgerAccountInstruction({
             id: new PublicKey(farmKeys.id),
