@@ -21,11 +21,10 @@
   ],
   "lint-staged": {
     "{src,test,misc}/**/*.ts": [
-      "yarn lint"
+      "yarn build"
     ]
   },
   "scripts": {
-    "lint": "",
     "test": "jest",
     "build-docs": "typedoc",
     "build-docs-watch": "typedoc --watch",
