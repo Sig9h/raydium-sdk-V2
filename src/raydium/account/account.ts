@@ -1,22 +1,40 @@
 import {
-  createAssociatedTokenAccountInstruction,
-  TOKEN_PROGRAM_ID,
-  AccountLayout,
-  TOKEN_2022_PROGRAM_ID,
-} from "@solana/spl-token";
-import { Commitment, PublicKey, SystemProgram, TransactionInstruction } from "@solana/web3.js";
-import { getATAAddress, BigNumberish, InstructionType, WSOLMint } from "@/common";
+  BigNumberish,
+  getATAAddress,
+  InstructionType,
+  WSOLMint,
+} from "@/common";
 import { AddInstructionParam } from "@/common/txTool/txTool";
+import {
+  AccountLayout,
+  createAssociatedTokenAccountInstruction,
+  TOKEN_2022_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+import {
+  Commitment,
+  PublicKey,
+  SystemProgram,
+  TransactionInstruction,
+} from "@solana/web3.js";
 
 import ModuleBase, { ModuleBaseProps } from "../moduleBase";
 import {
   closeAccountInstruction,
   createWSolAccountInstructions,
-  makeTransferInstruction,
   initTokenAccountInstruction,
+  makeTransferInstruction,
 } from "./instruction";
-import { HandleTokenAccountParams, TokenAccount, TokenAccountRaw, GetOrCreateTokenAccountParams } from "./types";
-import { parseTokenAccountResp, generatePubKey } from "./util";
+import {
+  GetOrCreateTokenAccountParams,
+  HandleTokenAccountParams,
+  TokenAccount,
+  TokenAccountRaw,
+} from "./types";
+import {
+  generatePubKey,
+  parseTokenAccountResp,
+} from "./util";
 
 export interface TokenAccountDataProp {
   tokenAccounts?: TokenAccount[];
@@ -160,7 +178,6 @@ export default class Account extends ModuleBase {
     account?: PublicKey;
     instructionParams?: AddInstructionParam;
   }> {
-    await this.fetchWalletTokenAccounts();
     const {
       mint,
       createInfo,
@@ -171,14 +188,7 @@ export default class Account extends ModuleBase {
       checkCreateATAOwner = false,
     } = params;
     const tokenProgram = new PublicKey(params.tokenProgram || TOKEN_PROGRAM_ID);
-    const ata = this.getAssociatedTokenAccount(mint, new PublicKey(tokenProgram));
-    const accounts = (notUseTokenAccount ? [] : this.tokenAccountRawInfos)
-      .filter((i) => i.accountInfo.mint.equals(mint) && (!associatedOnly || i.pubkey.equals(ata)))
-      .sort((a, b) => (a.accountInfo.amount.lt(b.accountInfo.amount) ? 1 : -1));
-    // find token or don't need create
-    if (createInfo === undefined || accounts.length > 0) {
-      return accounts.length > 0 ? { account: accounts[0].pubkey } : {};
-    }
+    
 
     const newTxInstructions: AddInstructionParam = {
       instructions: [],
@@ -189,6 +199,15 @@ export default class Account extends ModuleBase {
     };
 
     if (associatedOnly) {
+      await this.fetchWalletTokenAccounts();
+      const ata = this.getAssociatedTokenAccount(mint, new PublicKey(tokenProgram));
+      const accounts = (notUseTokenAccount ? [] : this.tokenAccountRawInfos)
+        .filter((i) => i.accountInfo.mint.equals(mint) && (!associatedOnly || i.pubkey.equals(ata)))
+        .sort((a, b) => (a.accountInfo.amount.lt(b.accountInfo.amount) ? 1 : -1));
+      // find token or don't need create
+      if (createInfo === undefined || accounts.length > 0) {
+        return accounts.length > 0 ? { account: accounts[0].pubkey } : {};
+      }
       const _createATAIns = createAssociatedTokenAccountInstruction(owner, ata, owner, mint, tokenProgram);
       if (checkCreateATAOwner) {
         const ataInfo = await this.scope.connection.getAccountInfo(ata);
@@ -266,14 +285,19 @@ export default class Account extends ModuleBase {
       //   return { account: txInstruction.addresses.newAccount, instructionParams: newTxInstructions };
       // } else {
       const newTokenAccount = generatePubKey({ fromPublicKey: owner, programId: tokenProgram });
-      const balanceNeeded = await this.scope.connection.getMinimumBalanceForRentExemption(AccountLayout.span);
+      let balanceNeeded = 0;
+      if (AccountLayout.span !== 165) {
+        balanceNeeded = await this.scope.connection.getMinimumBalanceForRentExemption(AccountLayout.span);
+      } else {
+        balanceNeeded = 2039280;
+      }
 
       const createAccountIns = SystemProgram.createAccountWithSeed({
         fromPubkey: owner,
         basePubkey: owner,
         seed: newTokenAccount.seed,
         newAccountPubkey: newTokenAccount.publicKey,
-        lamports: balanceNeeded + Number(createInfo.amount?.toString() ?? 0),
+        lamports: balanceNeeded + Number(createInfo!.amount?.toString() ?? 0),
         space: AccountLayout.span,
         programId: tokenProgram,
       });
@@ -293,7 +317,7 @@ export default class Account extends ModuleBase {
         newTxInstructions.endInstructions!.push(
           closeAccountInstruction({
             owner,
-            payer: createInfo.payer || owner,
+            payer: createInfo!.payer || owner,
             tokenAccount: newTokenAccount.publicKey,
             programId: tokenProgram,
           }),
