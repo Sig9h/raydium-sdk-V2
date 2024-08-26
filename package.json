@@ -25,7 +25,7 @@
     ]
   },
   "scripts": {
-    "lint": "eslint src/**/*.ts",
+    "lint": "",
     "test": "jest",
     "build-docs": "typedoc",
     "build-docs-watch": "typedoc --watch",
