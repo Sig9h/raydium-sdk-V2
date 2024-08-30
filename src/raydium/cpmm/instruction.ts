@@ -1,10 +1,27 @@
 import BN from "bn.js";
 
-import { AccountMeta, PublicKey, TransactionInstruction } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { SYSTEM_PROGRAM_ID, RENT_PROGRAM_ID, MEMO_PROGRAM_ID2, createLogger } from "@/common";
+import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  TOKEN_2022_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+import {
+  AccountMeta,
+  PublicKey,
+  TransactionInstruction,
+} from "@solana/web3.js";
 
-import { struct, u64 } from "@/marshmallow";
+import {
+  createLogger,
+  MEMO_PROGRAM_ID2,
+  RENT_PROGRAM_ID,
+  SYSTEM_PROGRAM_ID,
+} from "../../common";
+import {
+  struct,
+  u64,
+} from "../../marshmallow";
+
 const logger = createLogger("Raydium_cpmm");
 const anchorDataBuf = {
   initialize: [175, 175, 109, 31, 13, 152, 155, 237],

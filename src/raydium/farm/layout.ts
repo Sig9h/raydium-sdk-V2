@@ -1,22 +1,22 @@
-import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
+
+import { PublicKey } from "@solana/web3.js";
 
 import {
   blob,
+  bool,
   GetLayoutSchemaFromStructure,
   GetStructureFromLayoutSchema,
   GetStructureSchema,
+  i64,
+  i8,
   publicKey,
   seq,
   struct,
   u128,
   u64,
   u8,
-  i8,
-  i64,
-  bool,
-} from "@/marshmallow";
-
+} from "../../marshmallow";
 import { poolTypeV6 } from "./config";
 import { RewardType } from "./type";
 

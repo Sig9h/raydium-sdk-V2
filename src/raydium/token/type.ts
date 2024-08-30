@@ -1,5 +1,8 @@
-import { ApiV3Token } from "@/api/type";
-import { TokenProps, Token } from "@/module/token";
+import { ApiV3Token } from "../../api/type";
+import {
+  Token,
+  TokenProps,
+} from "../../module/token";
 
 export type TokenInfo = ApiV3Token & {
   priority: number;

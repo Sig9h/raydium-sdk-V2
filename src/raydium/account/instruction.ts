@@ -1,18 +1,29 @@
+import BN from "bn.js";
+
 import {
-  createInitializeAccountInstruction,
   createCloseAccountInstruction,
+  createInitializeAccountInstruction,
   createTransferInstruction,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { Commitment, Connection, PublicKey, Signer, SystemProgram, TransactionInstruction } from "@solana/web3.js";
-import BN from "bn.js";
-import { generatePubKey } from "./util";
-import { BigNumberish, parseBigNumberish } from "@/common";
-import { AddInstructionParam } from "@/common/txTool/txTool";
-import { InstructionType } from "@/common/txTool/txType";
-import { TOKEN_WSOL } from "../token/constant";
+import {
+  Commitment,
+  Connection,
+  PublicKey,
+  Signer,
+  SystemProgram,
+  TransactionInstruction,
+} from "@solana/web3.js";
 
+import {
+  BigNumberish,
+  parseBigNumberish,
+} from "../../common";
+import { AddInstructionParam } from "../../common/txTool/txTool";
+import { InstructionType } from "../../common/txTool/txType";
+import { TOKEN_WSOL } from "../token/constant";
 import { splAccountLayout } from "./layout";
+import { generatePubKey } from "./util";
 
 export function initTokenAccountInstruction(params: {
   mint: PublicKey;

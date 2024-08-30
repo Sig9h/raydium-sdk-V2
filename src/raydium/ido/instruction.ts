@@ -1,13 +1,25 @@
-import { PublicKey, TransactionInstruction, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { RENT_PROGRAM_ID, CLOCK_PROGRAM_ID, SYSTEM_PROGRAM_ID } from "@/common/pubKey";
 import {
-  PurchaseInstructionKeys,
-  ClaimInstructionKeysV3,
+  PublicKey,
+  SYSVAR_CLOCK_PUBKEY,
+  TransactionInstruction,
+} from "@solana/web3.js";
+
+import {
+  CLOCK_PROGRAM_ID,
+  RENT_PROGRAM_ID,
+  SYSTEM_PROGRAM_ID,
+} from "../../common/pubKey";
+import {
+  claimLayout,
+  purchaseLayout,
+} from "./layout";
+import {
   ClaimInstructionKeys,
+  ClaimInstructionKeysV3,
   IdoClaimInstructionParams,
+  PurchaseInstructionKeys,
 } from "./type";
-import { purchaseLayout, claimLayout } from "./layout";
 
 export function makePurchaseInstruction({
   programId,
