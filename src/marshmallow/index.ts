@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
-import BN, { isBN } from "bn.js";
+import BN from "bn.js";
 
 import {
   bits,
@@ -347,7 +347,7 @@ export function seq<T, P extends string = "", AnotherP extends string = "">(
   const superCount =
     typeof count === "number"
       ? count
-      : isBN(count)
+      : BN.isBN(count)
       ? count.toNumber()
       : new Proxy(count as unknown as Layout<number> /* pretend to be Layout<number> */, {
           get(target, property): any {
@@ -356,7 +356,7 @@ export function seq<T, P extends string = "", AnotherP extends string = "">(
               const countProperty = Reflect.get(target, "count");
 
               // let targetLayout's  property:count be a number
-              parsedCount = isBN(countProperty) ? countProperty.toNumber() : countProperty;
+              parsedCount = BN.isBN(countProperty) ? countProperty.toNumber() : countProperty;
 
               // record the count
               Reflect.set(target, "count", parsedCount);

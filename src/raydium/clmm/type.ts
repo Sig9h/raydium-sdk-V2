@@ -10,7 +10,7 @@ import {
   TransactionInstruction,
 } from "@solana/web3.js";
 
-import {
+import type {
   ApiClmmConfigInfo,
   ApiV3PoolInfoConcentratedItem,
   ApiV3Token,
