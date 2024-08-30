@@ -297,7 +297,7 @@ export default class Account extends ModuleBase {
         basePubkey: owner,
         seed: newTokenAccount.seed,
         newAccountPubkey: newTokenAccount.publicKey,
-        lamports: balanceNeeded + Number(createInfo!.amount?.toString() ?? 0),
+        lamports: balanceNeeded + Number(createInfo?.amount?.toString() ?? 0),
         space: AccountLayout.span,
         programId: tokenProgram,
       });
@@ -317,7 +317,7 @@ export default class Account extends ModuleBase {
         newTxInstructions.endInstructions!.push(
           closeAccountInstruction({
             owner,
-            payer: createInfo!.payer || owner,
+            payer: createInfo?.payer || owner,
             tokenAccount: newTokenAccount.publicKey,
             programId: tokenProgram,
           }),
