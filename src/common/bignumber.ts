@@ -16,7 +16,6 @@ import {
 } from "../raydium/token/type";
 import { ReplaceType } from "../raydium/type";
 import { mul } from "./fractionUtil";
-import { createLogger } from "./logger";
 import { notInnerObject } from "./utility";
 
 export const BN_ZERO = new BN(0);
@@ -34,7 +33,6 @@ export type Numberish = number | string | bigint | Fraction | BN;
 const MAX_SAFE = 0x1fffffffffffff;
 
 export function parseBigNumberish(value: BigNumberish): BN {
-  const logger = createLogger("Raydium_parseBigNumberish");
   // BN
   if (BN.isBN(value)) {
     return value;
@@ -44,16 +42,19 @@ export function parseBigNumberish(value: BigNumberish): BN {
     if (value.match(/^-?[0-9]+$/)) {
       return new BN(value);
     }
-    logger.logWithError(`invalid BigNumberish string: ${value}`);
+    console.error(`invalid BigNumberish string: ${value}`);
+    throw new Error(`invalid BigNumberish string: ${value}`);
   }
 
   if (typeof value === "number") {
     if (value % 1) {
-      logger.logWithError(`BigNumberish number underflow: ${value}`);
+      console.error(`BigNumberish number underflow: ${value}`);
+      throw new Error(`BigNumberish number underflow: ${value}`);
     }
 
     if (value >= MAX_SAFE || value <= -MAX_SAFE) {
-      logger.logWithError(`BigNumberish number overflow: ${value}`);
+      console.error(`BigNumberish number overflow: ${value}`);
+      throw new Error(`BigNumberish number overflow: ${value}`);
     }
 
     return new BN(String(value));
@@ -62,7 +63,7 @@ export function parseBigNumberish(value: BigNumberish): BN {
   if (typeof value === "bigint") {
     return new BN(value.toString());
   }
-  logger.error(`invalid BigNumberish value: ${value}`);
+  console.error(`invalid BigNumberish value: ${value}`);
   return new BN(0); // never reach, because logWithError will throw error
 }
 
