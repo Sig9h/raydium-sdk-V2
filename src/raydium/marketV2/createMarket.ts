@@ -1,13 +1,15 @@
-import { PublicKey } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import BN from "bn.js";
-import ModuleBase from "../moduleBase";
-import { TxVersion } from "@/common/txTool/txType";
-import { MakeMultiTxData } from "@/common/txTool/txTool";
-import { generatePubKey } from "../account/util";
+
 import { BN_ZERO } from "@/common/bignumber";
-import { makeCreateMarketInstruction } from "./instrument";
+import { MakeMultiTxData } from "@/common/txTool/txTool";
+import { TxVersion } from "@/common/txTool/txType";
 import { ComputeBudgetConfig } from "@/raydium/type";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { PublicKey } from "@solana/web3.js";
+
+import { generatePubKey } from "../account/util";
+import ModuleBase from "../moduleBase";
+import { makeCreateMarketInstruction } from "./instrument";
 
 interface ExtInfo {
   address: {
@@ -19,7 +21,7 @@ interface ExtInfo {
     baseVault: PublicKey;
     quoteVault: PublicKey;
     baseMint: PublicKey;
-    quoteMin: PublicKey;
+    quoteMint: PublicKey;
   };
 }
 
@@ -148,7 +150,7 @@ export default class MarketV2 extends ModuleBase {
           baseVault: baseVault.publicKey,
           quoteVault: quoteVault.publicKey,
           baseMint: new PublicKey(baseInfo.mint),
-          quoteMin: new PublicKey(quoteInfo.mint),
+          quoteMint: new PublicKey(quoteInfo.mint),
         },
       }) as Promise<MakeMultiTxData<T, ExtInfo>>;
 
@@ -163,7 +165,7 @@ export default class MarketV2 extends ModuleBase {
         baseVault: baseVault.publicKey,
         quoteVault: quoteVault.publicKey,
         baseMint: new PublicKey(baseInfo.mint),
-        quoteMin: new PublicKey(quoteInfo.mint),
+        quoteMint: new PublicKey(quoteInfo.mint),
       },
     }) as Promise<MakeMultiTxData<T, ExtInfo>>;
   }
