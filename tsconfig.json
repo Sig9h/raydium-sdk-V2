@@ -14,9 +14,6 @@
     "sourceMap": true,
     "jsx": "react",
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"],

@@ -1,40 +1,67 @@
-import { PublicKey } from "@solana/web3.js";
-import { NATIVE_MINT, TOKEN_PROGRAM_ID, AccountLayout } from "@solana/spl-token";
-import { ApiV3PoolInfoConcentratedItem, ApiV3PoolInfoStandardItemCpmm, CpmmKeys } from "@/api/type";
-import { Percent } from "@/module";
-import { BN_ZERO } from "@/common/bignumber";
-import { getATAAddress } from "@/common/pda";
-import { WSOLMint } from "@/common/pubKey";
-import { InstructionType, TxVersion } from "@/common/txTool/txType";
-import { MakeTxData } from "@/common/txTool/txTool";
-import { CurveCalculator } from "./curve/calculator";
+import BN from "bn.js";
+import Decimal from "decimal.js";
 
+import {
+  AccountLayout,
+  NATIVE_MINT,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+import { PublicKey } from "@solana/web3.js";
+
+import {
+  ApiV3PoolInfoStandardItemCpmm,
+  CpmmKeys,
+} from "../../api/type";
+import {
+  fetchMultipleMintInfos,
+  getMultipleAccountsInfoWithCustomFlags,
+  getTransferAmountFeeV2,
+} from "../../common";
+import { BN_ZERO } from "../../common/bignumber";
+import { getATAAddress } from "../../common/pda";
+import { WSOLMint } from "../../common/pubKey";
+import { MakeTxData } from "../../common/txTool/txTool";
+import {
+  InstructionType,
+  TxVersion,
+} from "../../common/txTool/txType";
+import { Percent } from "../../module";
+import {
+  GetTransferAmountFee,
+  ReturnTypeFetchMultipleMintInfos,
+} from "../../raydium/type";
 import ModuleBase, { ModuleBaseProps } from "../moduleBase";
 import {
-  CreateCpmmPoolParam,
-  CreateCpmmPoolAddress,
-  AddCpmmLiquidityParams,
-  WithdrawCpmmLiquidityParams,
-  CpmmSwapParams,
-  ComputePairAmountParams,
-  CpmmRpcData,
-  CpmmComputeData,
-} from "./type";
-import { getCreatePoolKeys, getPdaObservationId } from "./pda";
+  toApiV3Token,
+  toFeeConfig,
+} from "../token";
+import { CurveCalculator } from "./curve/calculator";
 import {
   makeCreateCpmmPoolInInstruction,
   makeDepositCpmmInInstruction,
-  makeWithdrawCpmmInInstruction,
   makeSwapCpmmBaseInInInstruction,
   makeSwapCpmmBaseOutInInstruction,
+  makeWithdrawCpmmInInstruction,
 } from "./instruction";
-import BN from "bn.js";
-import { CpmmPoolInfoLayout, CpmmConfigInfoLayout } from "./layout";
-import Decimal from "decimal.js";
-import { fetchMultipleMintInfos, getMultipleAccountsInfoWithCustomFlags, getTransferAmountFeeV2 } from "@/common";
-import { GetTransferAmountFee, ReturnTypeFetchMultipleMintInfos } from "@/raydium/type";
-import { toApiV3Token, toFeeConfig } from "../token";
-import { getPdaPoolAuthority } from "./pda";
+import {
+  CpmmConfigInfoLayout,
+  CpmmPoolInfoLayout,
+} from "./layout";
+import {
+  getCreatePoolKeys,
+  getPdaObservationId,
+  getPdaPoolAuthority,
+} from "./pda";
+import {
+  AddCpmmLiquidityParams,
+  ComputePairAmountParams,
+  CpmmComputeData,
+  CpmmRpcData,
+  CpmmSwapParams,
+  CreateCpmmPoolAddress,
+  CreateCpmmPoolParam,
+  WithdrawCpmmLiquidityParams,
+} from "./type";
 
 export default class CpmmModule extends ModuleBase {
   constructor(params: ModuleBaseProps) {

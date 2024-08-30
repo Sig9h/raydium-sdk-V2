@@ -1,13 +1,21 @@
-import { PublicKey } from "@solana/web3.js";
-import ModuleBase from "../moduleBase";
-import { makeClaimInstruction, makeClaimInstructionV4 } from "./instruction";
-import { jsonInfo2PoolKeys } from "@/common/utility";
-import { OwnerIdoInfo, IdoKeysData } from "@/api/type";
-import { IDO_ALL_PROGRAM } from "@/common/programId";
-import { WSOLMint } from "@/common/pubKey";
-import { TxVersion } from "@/common/txTool/txType";
-import { MakeTxData } from "@/common/txTool/txTool";
 import BN from "bn.js";
+
+import { PublicKey } from "@solana/web3.js";
+
+import {
+  IdoKeysData,
+  OwnerIdoInfo,
+} from "../../api/type";
+import { IDO_ALL_PROGRAM } from "../../common/programId";
+import { WSOLMint } from "../../common/pubKey";
+import { MakeTxData } from "../../common/txTool/txTool";
+import { TxVersion } from "../../common/txTool/txType";
+import { jsonInfo2PoolKeys } from "../../common/utility";
+import ModuleBase from "../moduleBase";
+import {
+  makeClaimInstruction,
+  makeClaimInstructionV4,
+} from "./instruction";
 
 const PROGRAM_TO_VERSION = {
   [IDO_ALL_PROGRAM.IDO_PROGRAM_ID_V1.toString()]: 1,

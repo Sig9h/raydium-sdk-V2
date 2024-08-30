@@ -1,10 +1,16 @@
-import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import { ComputeBudgetConfig } from "@/raydium/type";
-import { BigNumberish } from "@/common/bignumber";
-import { FormatFarmInfoOut, ApiV3PoolInfoStandardItem, ApiV3Token } from "@/api/type";
+
+import { PublicKey } from "@solana/web3.js";
+
+import {
+  ApiV3PoolInfoStandardItem,
+  ApiV3Token,
+  FormatFarmInfoOut,
+} from "../../api/type";
+import { TxVersion } from "../../common";
+import { BigNumberish } from "../../common/bignumber";
+import { ComputeBudgetConfig } from "../../raydium/type";
 import { poolTypeV6 } from "./config";
-import { TxVersion } from "@/common";
 
 export type RewardType = keyof typeof poolTypeV6;
 export interface APIRewardInfo {

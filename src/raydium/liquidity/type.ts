@@ -1,17 +1,17 @@
 import BN from "bn.js";
 import Decimal from "decimal.js";
 
+import { PublicKey } from "@solana/web3.js";
+
 import {
   AmmV4Keys,
   AmmV5Keys,
   ApiV3PoolInfoStandardItem,
-} from "@/api/type";
-import { BigNumberish } from "@/common/bignumber";
-import { TxVersion } from "@/common/txTool/txType";
-import { TokenAmount } from "@/module/amount";
-import { ComputeBudgetConfig } from "@/raydium/type";
-import { PublicKey } from "@solana/web3.js";
-
+} from "../../api/type";
+import { BigNumberish } from "../../common/bignumber";
+import { TxVersion } from "../../common/txTool/txType";
+import { TokenAmount } from "../../module/amount";
+import { ComputeBudgetConfig } from "../../raydium/type";
 import { liquidityStateV4Layout } from "./layout";
 
 export type LiquiditySide = "a" | "b";

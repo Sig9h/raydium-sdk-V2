@@ -2,33 +2,40 @@ import BN from "bn.js";
 import Decimal from "decimal.js";
 
 import {
+  AccountLayout,
+  NATIVE_MINT,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+import { PublicKey } from "@solana/web3.js";
+
+import {
   AmmV4Keys,
   AmmV5Keys,
   ApiV3PoolInfoConcentratedItem,
   ApiV3PoolInfoStandardItem,
   FormatFarmInfoOutV6,
-} from "@/api/type";
-import { WSOLMint } from "@/common";
-import { getMultipleAccountsInfoWithCustomFlags } from "@/common/accountInfo";
+} from "../../api/type";
+import { WSOLMint } from "../../common";
+import { getMultipleAccountsInfoWithCustomFlags } from "../../common/accountInfo";
 import {
   BN_ZERO,
   divCeil,
-} from "@/common/bignumber";
-import { getATAAddress } from "@/common/pda";
-import { BNDivCeil } from "@/common/transfer";
+} from "../../common/bignumber";
+import { getATAAddress } from "../../common/pda";
+import { BNDivCeil } from "../../common/transfer";
 import {
   MakeMultiTxData,
   MakeTxData,
-} from "@/common/txTool/txTool";
+} from "../../common/txTool/txTool";
 import {
   InstructionType,
   TxVersion,
-} from "@/common/txTool/txType";
+} from "../../common/txTool/txType";
 import {
   Percent,
   Token,
   TokenAmount,
-} from "@/module";
+} from "../../module";
 import {
   createAssociatedLedgerAccountInstruction,
   FARM_PROGRAM_TO_VERSION,
@@ -38,14 +45,7 @@ import {
   makeWithdrawInstructionV3,
   makeWithdrawInstructionV5,
   makeWithdrawInstructionV6,
-} from "@/raydium/farm";
-import {
-  AccountLayout,
-  NATIVE_MINT,
-  TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
-import { PublicKey } from "@solana/web3.js";
-
+} from "../../raydium/farm";
 import { ClmmInstrument } from "../clmm/instrument";
 import ModuleBase, { ModuleBaseProps } from "../moduleBase";
 import { toToken } from "../token";

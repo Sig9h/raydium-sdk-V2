@@ -1,12 +1,26 @@
-import { PublicKey, Keypair, Signer, TransactionInstruction, Transaction } from "@solana/web3.js";
 import BN from "bn.js";
-import { TokenAmount, Token } from "@/module";
-import { TransferAmountFee } from "../type";
-import { ApiV3PoolInfoItem, PoolKeys } from "@/api/type";
-import { ComputeAmountOutParam } from "@/raydium/liquidity/type";
-import { ComputeClmmPoolInfo } from "@/raydium/clmm/type";
 import Decimal from "decimal.js";
+
+import {
+  Keypair,
+  PublicKey,
+  Signer,
+  Transaction,
+  TransactionInstruction,
+} from "@solana/web3.js";
+
+import {
+  ApiV3PoolInfoItem,
+  PoolKeys,
+} from "../../api/type";
+import {
+  Token,
+  TokenAmount,
+} from "../../module";
+import { ComputeClmmPoolInfo } from "../../raydium/clmm/type";
+import { ComputeAmountOutParam } from "../../raydium/liquidity/type";
 import { CpmmComputeData } from "../cpmm";
+import { TransferAmountFee } from "../type";
 
 export interface ComputeAmountOutAmmLayout {
   amountIn: TransferAmountFee;

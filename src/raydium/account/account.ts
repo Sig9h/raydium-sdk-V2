@@ -1,11 +1,4 @@
 import {
-  BigNumberish,
-  getATAAddress,
-  InstructionType,
-  WSOLMint,
-} from "@/common";
-import { AddInstructionParam } from "@/common/txTool/txTool";
-import {
   AccountLayout,
   createAssociatedTokenAccountInstruction,
   TOKEN_2022_PROGRAM_ID,
@@ -18,6 +11,13 @@ import {
   TransactionInstruction,
 } from "@solana/web3.js";
 
+import {
+  BigNumberish,
+  getATAAddress,
+  InstructionType,
+  WSOLMint,
+} from "../../common";
+import { AddInstructionParam } from "../../common/txTool/txTool";
 import ModuleBase, { ModuleBaseProps } from "../moduleBase";
 import {
   closeAccountInstruction,
@@ -188,7 +188,7 @@ export default class Account extends ModuleBase {
       checkCreateATAOwner = false,
     } = params;
     const tokenProgram = new PublicKey(params.tokenProgram || TOKEN_PROGRAM_ID);
-    
+
 
     const newTxInstructions: AddInstructionParam = {
       instructions: [],

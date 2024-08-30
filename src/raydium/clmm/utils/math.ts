@@ -1,7 +1,20 @@
-import { PublicKey, EpochInfo } from "@solana/web3.js";
 import BN from "bn.js";
 import Decimal from "decimal.js";
 
+import {
+  EpochInfo,
+  PublicKey,
+} from "@solana/web3.js";
+
+import { ApiV3PoolInfoConcentratedItem } from "../../../api/type";
+import {
+  getTransferAmountFeeV2,
+  minExpirationTime,
+} from "../../../common/transfer";
+import {
+  ReturnTypeGetLiquidityAmountOut,
+  TickArrayBitmapExtensionType,
+} from "../type";
 import {
   BIT_PRECISION,
   Fee,
@@ -17,17 +30,18 @@ import {
   MIN_TICK,
   NEGATIVE_ONE,
   ONE,
+  Q128,
   Q64,
   U64Resolution,
   ZERO,
-  Q128,
 } from "./constants";
 import { getPdaTickArrayAddress } from "./pda";
 import { PoolUtils } from "./pool";
-import { Tick, TickArray, TickUtils } from "./tick";
-import { ReturnTypeGetLiquidityAmountOut, TickArrayBitmapExtensionType } from "../type";
-import { ApiV3PoolInfoConcentratedItem } from "@/api/type";
-import { getTransferAmountFeeV2, minExpirationTime } from "@/common/transfer";
+import {
+  Tick,
+  TickArray,
+  TickUtils,
+} from "./tick";
 import { TickQuery } from "./tickQuery";
 
 export class MathUtil {
