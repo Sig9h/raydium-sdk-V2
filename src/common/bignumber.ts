@@ -1,22 +1,23 @@
 import BN from "bn.js";
 import Decimal from "decimal.js";
-import { Token } from "../module/token";
-import { Price } from "../module/price";
+
+import {
+  CurrencyAmount,
+  TokenAmount,
+} from "../module/amount";
 import { Currency } from "../module/currency";
-import { TokenAmount, CurrencyAmount } from "../module/amount";
 import { Fraction } from "../module/fraction";
 import { Percent } from "../module/percent";
-import { SplToken, TokenJson } from "../raydium/token/type";
+import { Price } from "../module/price";
+import { Token } from "../module/token";
+import {
+  SplToken,
+  TokenJson,
+} from "../raydium/token/type";
 import { ReplaceType } from "../raydium/type";
-import { createLogger } from "./logger";
 import { mul } from "./fractionUtil";
+import { createLogger } from "./logger";
 import { notInnerObject } from "./utility";
-
-export enum Rounding {
-  ROUND_DOWN,
-  ROUND_HALF_UP,
-  ROUND_UP,
-}
 
 export const BN_ZERO = new BN(0);
 export const BN_ONE = new BN(1);

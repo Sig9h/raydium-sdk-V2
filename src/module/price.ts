@@ -1,6 +1,9 @@
-import { BigNumberish, Rounding, tenExponential } from "../common/bignumber";
+import {
+  BigNumberish,
+  tenExponential,
+} from "../common/bignumber";
 import { createLogger } from "../common/logger";
-
+import { Rounding } from "../common/rounding";
 import { Fraction } from "./fraction";
 import { Token } from "./token";
 
