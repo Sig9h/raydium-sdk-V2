@@ -641,6 +641,7 @@ export default class LiquidityModule extends ModuleBase {
     txVersion,
     feeDestinationId,
     computeBudgetConfig,
+    recentBlockhash
   }: CreatePoolParam<T>): Promise<MakeTxData<T, { address: CreatePoolAddress }>> {
     const payer = ownerInfo.feePayer || this.scope.owner?.publicKey;
     const mintAUseSOLBalance = ownerInfo.useSOLBalance && baseMintInfo.mint.equals(NATIVE_MINT);
@@ -741,7 +742,8 @@ export default class LiquidityModule extends ModuleBase {
       txVersion,
       extInfo: {
         address: createPoolKeys,
-      },
+        recentBlockhash,
+      } as any,
     }) as Promise<MakeTxData<T, { address: CreatePoolAddress }>>;
   }
 

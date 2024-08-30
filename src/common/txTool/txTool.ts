@@ -811,6 +811,7 @@ export class TxBuilder {
 
   public async sizeCheckBuildV0(
     props?: Record<string, any> & {
+      blockhash?: string;
       computeBudgetConfig?: ComputeBudgetConfig;
       lookupTableCache?: CacheLTA;
       lookupTableAddress?: string[];
@@ -837,7 +838,7 @@ export class TxBuilder {
             instructionTypes: [],
           };
 
-    const blockHash = await getRecentBlockHash(this.connection, this.blockhashCommitment);
+    const blockHash = props?.blockhash ?? (await getRecentBlockHash(this.connection, this.blockhashCommitment));
 
     const signerKey: { [key: string]: Signer } = this.signers.reduce(
       (acc, cur) => ({ ...acc, [cur.publicKey.toBase58()]: cur }),

@@ -37,6 +37,7 @@ export default class MarketV2 extends ModuleBase {
     orderbookQueueSpace,
     txVersion,
     computeBudgetConfig,
+    blockHash,
   }: {
     baseInfo: {
       mint: PublicKey;
@@ -55,7 +56,8 @@ export default class MarketV2 extends ModuleBase {
     eventQueueSpace?: number;
     orderbookQueueSpace?: number;
     txVersion?: T;
-    computeBudgetConfig?: ComputeBudgetConfig;
+      computeBudgetConfig?: ComputeBudgetConfig;
+    blockHash?: string;
   }): Promise<MakeMultiTxData<T, ExtInfo>> {
     const wallet = this.scope.ownerPubKey;
     const market = generatePubKey({ fromPublicKey: wallet, programId: dexProgramId });
@@ -140,6 +142,7 @@ export default class MarketV2 extends ModuleBase {
 
     if (txVersion === TxVersion.V0)
       return txBuilder.sizeCheckBuildV0({
+        blockhash: blockHash,
         computeBudgetConfig,
         address: {
           marketId: market.publicKey,

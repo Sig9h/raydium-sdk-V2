@@ -128,6 +128,7 @@ export interface CreatePoolParam<T> {
   feeDestinationId: PublicKey;
   computeBudgetConfig?: ComputeBudgetConfig;
   txVersion?: T;
+  recentBlockhash?: string
 }
 
 export interface CreatePoolAddress {
