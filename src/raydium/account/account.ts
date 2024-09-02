@@ -178,7 +178,9 @@ export default class Account extends ModuleBase {
     account?: PublicKey;
     instructionParams?: AddInstructionParam;
   }> {
-    await this.fetchWalletTokenAccounts();
+    await this.fetchWalletTokenAccounts({
+      commitment: "confirmed"
+    });
     const {
       mint,
       createInfo,
