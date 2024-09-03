@@ -115,18 +115,12 @@ export function initializeMarket({
 // getMinimumBalanceForRentExemption(262156) = 1825496640
 // getMinimumBalanceForRentExemption(65548) = 457104960
 // getMinimumBalanceForRentExemption(65548) = 457104960
-const BalanceForRentExemptionCacheMapping = {
-  165: 2039280,
-  388: 3591360,
-  5132: 36609600,
-  262156: 1825496640,
-  65548: 457104960,
-};
+// y = 6960x + 890880
 
 async function getMinimumBalanceForRentExemption(connection: Connection, dataLength: number) {
-  if (BalanceForRentExemptionCacheMapping[dataLength]) {
-    return BalanceForRentExemptionCacheMapping[dataLength];
-  }
+  const MinimumBalanceForRentExemption = dataLength * 6960 + 890880
+  console.log(`getMinimumBalanceForRentExemption(${dataLength}) = ${MinimumBalanceForRentExemption}`)
+  return MinimumBalanceForRentExemption
   const res = await connection.getMinimumBalanceForRentExemption(dataLength)
   console.log(`getMinimumBalanceForRentExemption(${dataLength}) = ${res}`)
   return res
