@@ -3,13 +3,21 @@
   "version": "0.1.65-alpha",
   "description": "An SDK for building applications on top of Raydium.",
   "license": "GPL-3.0",
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "commonjs",
   "files": [
-    "./lib",
-    "./src"
+    "dist",
+    "src"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "repository": "https://github.com/raydium-io/raydium-sdk-V2",
   "publicConfig": {
     "registry": "https://registry.yarnpkg.com",
@@ -29,7 +37,7 @@
     "build-docs": "typedoc",
     "build-docs-watch": "typedoc --watch",
     "build-dist": "rm -rf dist && mkdir dist && yarn build-docs",
-    "build-lib": "rm -rf lib && tsup src --format cjs,esm --dts --sourcemap --no-splitting --minify -d lib --silent",
+    "build-lib": "rm -rf lib && tsup --config tsup.config.ts",
     "build-all": "yarn build-dist && yarn build-lib",
     "build": "yarn build-lib",
     "push": "yarn build && yarn publish",
@@ -76,9 +84,9 @@
     "ts-jest": "^27.0.7",
     "ts-jest-resolver": "^2.0.0",
     "ts-node": "^10.7.0",
-    "tsup": "^5.12.8",
+    "tsup": "^8.3.5",
     "typedoc": "^0.22.15",
-    "typescript": "^5.5.4",
+    "typescript": "^4.9.5",
     "yarn": "^1.22.19"
   }
 }
